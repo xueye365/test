@@ -1,6 +1,7 @@
 out
 *.iml
 .idea
+**/misc.xml
 log.*
 **/logs
 .DS_Store
@@ -9,11 +10,7 @@ log.*
 **/bower_components
 logs/
 **/.tmp
-client/dev-release/
-blur-admin-master/
 .metadata/
 *.prefs
 *.project
 *.classpath
-client/$HOME/
-client/.qiniu.json
