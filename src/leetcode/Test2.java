@@ -2,6 +2,9 @@ package leetcode;
 
 /**
  * 最长回文字符串
+ *
+ * https://leetcode-cn.com/problems/longest-palindromic-substring/
+ *
  */
 public class Test2 {
 

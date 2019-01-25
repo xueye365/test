@@ -3,6 +3,9 @@ package leetcode;
 
 /**
  * 链表两个数相加
+ *
+ * https://leetcode-cn.com/problems/two-sum/
+ *
  */
 public class Test6 {
 

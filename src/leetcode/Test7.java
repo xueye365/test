@@ -1,26 +1,29 @@
 package leetcode;
 
+
+import java.util.HashMap;
+import java.util.Map;
+
 /**
- * 斐波那契数列
+ * 两数之和
+ *
+ * https://leetcode-cn.com/problems/two-sum/
+ *
  */
 public class Test7 {
 
-    public static void main(String[] args) {
-//        System.out.println(Fibonacci(100));
-//        System.out.println(Fibonacci(500));
-//        System.out.println(Fibonacci(1000));
-//        System.out.println(Fibonacci2(100, 1));
-//        System.out.println(Fibonacci2(500, 1));
-        System.out.println(Fibonacci2(1000,1));
+    public int[] twoSum(int[] nums, int target) {
+        Map map = new HashMap();
+        for (int i = 0; i < nums.length; i++) {
+            map.put(nums[i], i);
+        }
+        for (int i = 0; i < nums.length; i++) {
+            int temp = target - nums[i];
+            if (map.containsKey(temp) && (int) map.get(temp) != i) {
+                return new int[]{i, (int) map.get(temp)};
+            }
+        }
+        return null;
     }
 
-    public static int Fibonacci (int n) {
-        if (n == 1) return 1;
-        return n * Fibonacci(n - 1);
-    }
-
-    public static int Fibonacci2 (int n , int total) {
-        if (n == 1) return total;
-        return Fibonacci2(n - 1, n * total);
-    }
 }

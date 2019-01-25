@@ -5,6 +5,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * 三数之和
+ *
+ * https://leetcode-cn.com/problems/3sum/
+ *
+ */
 public class Test5 {
 
     public static List<List<Integer>> threeSum(int[] nums) {
