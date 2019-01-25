@@ -4,10 +4,10 @@ package leetcode;
 /**
  * 链表两个数相加
  *
- * https://leetcode-cn.com/problems/two-sum/
+ * https://leetcode-cn.com/problems/add-two-numbers/
  *
  */
-public class Test6 {
+public class AddTwoNumbers {
 
     public static void main(String[] args) {
         ListNode node1 = new ListNode(3);

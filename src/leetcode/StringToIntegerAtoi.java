@@ -6,7 +6,7 @@ package leetcode;
  * https://leetcode-cn.com/problems/string-to-integer-atoi/
  *
  */
-public class Test3 {
+public class StringToIntegerAtoi {
 
     public static void main(String[] args) {
         System.out.println(myAtoi("abc -123"));

@@ -6,7 +6,7 @@ package leetcode;
  * https://leetcode-cn.com/problems/longest-palindromic-substring/
  *
  */
-public class Test2 {
+public class LongestPalindrome {
 
     public static void main(String[] args) {
         System.out.println(longestPalindrome("abcddcbaaaaa"));

@@ -6,7 +6,7 @@ package leetcode;
  * https://leetcode-cn.com/problems/longest-common-prefix/
  *
  */
-public class Test4 {
+public class LongestCommonPrefix {
 
 
     public static void main(String[] args) {

@@ -10,7 +10,7 @@ import java.util.Map;
  * https://leetcode-cn.com/problems/two-sum/
  *
  */
-public class Test7 {
+public class TwoSum {
 
     public int[] twoSum(int[] nums, int target) {
         Map map = new HashMap();

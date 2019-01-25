@@ -11,7 +11,7 @@ import java.util.Set;
  * https://leetcode-cn.com/problems/3sum/
  *
  */
-public class Test5 {
+public class ThreeSum {
 
     public static List<List<Integer>> threeSum(int[] nums) {
         if (nums.length < 2) {
