@@ -1,0 +1,19 @@
+
+
+一. 线程池中submit与execute区别
+    1.可以接受的任务类型:    execute只能接受Runnable类型的任务，   submit可以接受Runnable和Callable类型的任务，
+    2.返回值:              execute没有返回值                    submit有返回值
+    3.异常：               execute中的是Runnable接口的实现，所以只能使用try、catch来捕获CheckedException，通过实现UncaughtExceptionHande接口处理UncheckedException
+                          submit中抛出异常,不管提交的是Runnable还是Callable类型的任务，如果不对返回值Future调用get()方法，都会吃掉异常
+    ps:submit可以接受Runnable的时候，Runnable返回值为void，所以使用Future的get()获得的还是null
+
+
+
+
+
+
+
+
+
+
+
