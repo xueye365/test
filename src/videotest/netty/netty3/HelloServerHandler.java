@@ -1,8 +1,10 @@
-package videotest.netty;
+package videotest.netty.netty3;
 
+import org.jboss.netty.buffer.ChannelBuffer;
+import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.channel.*;
 
-public class HelloClientHandler extends SimpleChannelHandler{
+public class HelloServerHandler extends SimpleChannelHandler{
 
     @Override
     public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e) throws Exception {
@@ -13,7 +15,21 @@ public class HelloClientHandler extends SimpleChannelHandler{
     @Override
     public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws Exception {
         System.out.println("messageReceived");
-        super.messageReceived(ctx, e);
+        // 接受数据
+        /*
+        ChannelBuffer message = (ChannelBuffer)e.getMessage();
+        String result = new String(message.array());
+        System.out.println(result);
+         */
+        System.out.println(e.getMessage());
+
+        // 回写数据
+        /*(需要用ChannelBuffer包起来)
+        ChannelBuffer channelBuffer = ChannelBuffers.copiedBuffer("hi".getBytes());
+        ctx.getChannel().write(channelBuffer);
+        */
+//        ctx.getChannel().write("bbb");
+//        super.messageReceived(ctx, e);
     }
 
     @Override
@@ -23,24 +39,12 @@ public class HelloClientHandler extends SimpleChannelHandler{
     }
 
 
-    /**
-     * 必须是链接已经建立，关闭通道的时候才会触发
-     * @param ctx
-     * @param e
-     * @throws Exception
-     */
     @Override
     public void channelDisconnected(ChannelHandlerContext ctx, ChannelStateEvent e) throws Exception {
         System.out.println("channelDisconnected");
         super.channelDisconnected(ctx, e);
     }
 
-    /**
-     * channel关闭的时候触发
-     * @param ctx
-     * @param e
-     * @throws Exception
-     */
     @Override
     public void channelClosed(ChannelHandlerContext ctx, ChannelStateEvent e) throws Exception {
         System.out.println("channelClosed");
