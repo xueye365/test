@@ -11,7 +11,7 @@ import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class NettyClientHelloWord {
+public class Client {
 
     public static void main(String[] args) {
         ClientBootstrap clientBootstrap = new ClientBootstrap();
@@ -24,7 +24,7 @@ public class NettyClientHelloWord {
                 ChannelPipeline pipeline = Channels.pipeline();
                 pipeline.addLast("decoder", new StringDecoder());
                 pipeline.addLast("encoder", new StringEncoder());
-                pipeline.addLast("HelloHandler", new HelloClientHandler());
+                pipeline.addLast("HelloHandler", new ClientHandler());
                 return pipeline;
             }
         });

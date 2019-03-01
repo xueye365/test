@@ -2,7 +2,7 @@ package videotest.netty.netty3;
 
 import org.jboss.netty.channel.*;
 
-public class HelloClientHandler extends SimpleChannelHandler{
+public class ClientHandler extends SimpleChannelHandler{
 
     @Override
     public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e) throws Exception {

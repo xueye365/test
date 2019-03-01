@@ -16,7 +16,7 @@ import java.util.concurrent.Executors;
 /**
  * 服务端
  */
-public class NettyServerHelloWord {
+public class Server {
 
     public static void main(String[] args) {
         // 服务类
@@ -37,7 +37,7 @@ public class NettyServerHelloWord {
                 pipeline.addLast("decoder", new StringDecoder());
                 // 这里这样写回写数据可以直接用字符串
                 pipeline.addLast("encoder", new StringEncoder());
-                pipeline.addLast("helloHandler", new HelloServerHandler());
+                pipeline.addLast("helloHandler", new ServerHandler());
                 return pipeline;
             }
         });

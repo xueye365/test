@@ -4,7 +4,7 @@ import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.channel.*;
 
-public class HelloServerHandler extends SimpleChannelHandler{
+public class ServerHandler extends SimpleChannelHandler{
 
     @Override
     public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e) throws Exception {
