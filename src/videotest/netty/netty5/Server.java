@@ -7,6 +7,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
+import io.netty.handler.timeout.IdleStateHandler;
 
 public class Server {
 
@@ -29,6 +30,7 @@ public class Server {
 
             @Override
             protected void initChannel(Channel channel) throws Exception {
+                channel.pipeline().addLast(new IdleStateHandler(5,5,10));
                 channel.pipeline().addLast(new StringDecoder());
                 channel.pipeline().addLast(new StringEncoder());
                 channel.pipeline().addLast(new ServerHandler());

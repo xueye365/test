@@ -8,6 +8,8 @@ import org.jboss.netty.channel.Channels;
 import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
 import org.jboss.netty.handler.codec.string.StringDecoder;
 import org.jboss.netty.handler.codec.string.StringEncoder;
+import org.jboss.netty.handler.timeout.IdleStateHandler;
+import org.jboss.netty.util.HashedWheelTimer;
 
 import java.net.InetSocketAddress;
 import java.util.concurrent.ExecutorService;
@@ -27,11 +29,16 @@ public class Server {
         ExecutorService worker = Executors.newCachedThreadPool();
         // 设置niosocket的工厂
         bootstrap.setFactory(new NioServerSocketChannelFactory(boss, worker));
+        // 设置定时器
+        HashedWheelTimer timer = new HashedWheelTimer();
         // 设置管道工厂
         bootstrap.setPipelineFactory(new ChannelPipelineFactory() {
             @Override
             public ChannelPipeline getPipeline() throws Exception {
                 ChannelPipeline pipeline = Channels.pipeline();
+                // 添加一个心跳检测处理器, 这个要写到最前面不然不起作用
+                // 这是一个定时器
+                pipeline.addLast("idle", new IdleStateHandler(timer, 5, 5, 10));
                 // 管道里头装的都是过滤器
                 // 这里这样写接收消息的时候就可以直接用e.getMessage()变成字符串
                 pipeline.addLast("decoder", new StringDecoder());
