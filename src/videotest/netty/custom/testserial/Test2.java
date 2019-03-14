@@ -1,4 +1,4 @@
-package videotest.netty.custom.testserial;
+package src.videotest.netty.custom.testserial;
 
 import java.nio.ByteBuffer;
 import java.util.Arrays;

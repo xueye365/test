@@ -1,4 +1,4 @@
-package videotest.netty.custom.constant;
+package src.videotest.netty.custom.constant;
 
 public interface StateCode {
 	

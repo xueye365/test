@@ -1,4 +1,4 @@
-package videotest.netty;
+package src.videotest.netty;
 
 
 import java.io.IOException;

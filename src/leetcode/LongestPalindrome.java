@@ -1,4 +1,4 @@
-package leetcode;
+package src.leetcode;
 
 /**
  * 最长回文字符串

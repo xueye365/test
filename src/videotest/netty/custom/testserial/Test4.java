@@ -1,7 +1,7 @@
-package videotest.netty.custom.testserial;
+package src.videotest.netty.custom.testserial;
 
 import com.alibaba.fastjson.JSON;
-import videotest.netty.custom.module.Player;
+import src.videotest.netty.custom.module.Player;
 
 import java.util.Arrays;
 

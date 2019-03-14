@@ -1,4 +1,4 @@
-package videotest.netty.netty5;
+package src.videotest.netty.netty5;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;

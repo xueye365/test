@@ -1,12 +1,12 @@
-package videotest.netty.custom.coder;
+package src.videotest.netty.custom.coder;
 
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.handler.codec.frame.FrameDecoder;
-import videotest.netty.custom.constant.ConstantValue;
-import videotest.netty.custom.model.Request;
-import videotest.netty.custom.model.Response;
+import src.videotest.netty.custom.constant.ConstantValue;
+import src.videotest.netty.custom.model.Request;
+import src.videotest.netty.custom.model.Response;
 
 
 public class ResponseDecoder extends FrameDecoder {

@@ -1,9 +1,9 @@
-package videotest.netty.custom.module;
+package src.videotest.netty.custom.module;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import videotest.netty.custom.serial.Serializer;
+import src.videotest.netty.custom.serial.Serializer;
 
 public class Player extends Serializer{
 

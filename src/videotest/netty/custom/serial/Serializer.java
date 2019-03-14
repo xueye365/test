@@ -1,4 +1,4 @@
-package videotest.netty.custom.serial;
+package src.videotest.netty.custom.serial;
 
 import java.nio.charset.Charset;
 import java.util.ArrayList;

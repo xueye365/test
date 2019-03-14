@@ -1,4 +1,4 @@
-package videotest.netty.protocol.java;
+package src.videotest.netty.protocol.java;
 
 import java.io.*;
 import java.util.Arrays;

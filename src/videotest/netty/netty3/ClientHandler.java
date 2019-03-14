@@ -1,4 +1,4 @@
-package videotest.netty.netty3;
+package src.videotest.netty.netty3;
 
 import org.jboss.netty.channel.*;
 

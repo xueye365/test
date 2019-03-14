@@ -1,4 +1,4 @@
-package videotest.netty.protocol.protoautogener;
+package src.videotest.netty.protocol.protoautogener;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 

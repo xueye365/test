@@ -1,4 +1,4 @@
-package videotest.netty.custom.coder;
+package src.videotest.netty.custom.coder;
 
 
 import org.jboss.netty.buffer.ChannelBuffer;
@@ -6,8 +6,8 @@ import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.handler.codec.oneone.OneToOneEncoder;
-import videotest.netty.custom.constant.ConstantValue;
-import videotest.netty.custom.model.Request;
+import src.videotest.netty.custom.constant.ConstantValue;
+import src.videotest.netty.custom.model.Request;
 
 /**
  * 请求编码器

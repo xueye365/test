@@ -1,13 +1,13 @@
-package videotest.netty.custom;
+package src.videotest.netty.custom;
 
 import org.jboss.netty.bootstrap.ClientBootstrap;
 import org.jboss.netty.channel.*;
 import org.jboss.netty.channel.socket.nio.NioClientSocketChannelFactory;
-import videotest.netty.custom.coder.RequestEncoder;
-import videotest.netty.custom.coder.ResponseDecoder;
-import videotest.netty.custom.handler.HiHandler;
-import videotest.netty.custom.model.Request;
-import videotest.netty.custom.module.Player;
+import src.videotest.netty.custom.coder.RequestEncoder;
+import src.videotest.netty.custom.coder.ResponseDecoder;
+import src.videotest.netty.custom.handler.HiHandler;
+import src.videotest.netty.custom.model.Request;
+import src.videotest.netty.custom.module.Player;
 
 import java.net.InetSocketAddress;
 import java.util.Scanner;

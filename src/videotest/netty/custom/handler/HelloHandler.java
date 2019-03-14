@@ -1,15 +1,15 @@
-package videotest.netty.custom.handler;
+package src.videotest.netty.custom.handler;
 
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.ChannelStateEvent;
 import org.jboss.netty.channel.ExceptionEvent;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelHandler;
-import videotest.netty.custom.constant.StateCode;
-import videotest.netty.custom.model.Request;
-import videotest.netty.custom.model.Response;
-import videotest.netty.custom.module.Player;
-import videotest.netty.custom.module.Resource;
+import src.videotest.netty.custom.constant.StateCode;
+import src.videotest.netty.custom.model.Request;
+import src.videotest.netty.custom.model.Response;
+import src.videotest.netty.custom.module.Player;
+import src.videotest.netty.custom.module.Resource;
 
 /**
  * 消息接受处理类

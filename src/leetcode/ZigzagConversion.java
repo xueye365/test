@@ -1,4 +1,4 @@
-package leetcode;
+package src.leetcode;
 
 /**
  * Z 字形变换

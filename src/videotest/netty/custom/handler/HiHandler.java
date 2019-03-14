@@ -1,10 +1,10 @@
-package videotest.netty.custom.handler;
+package src.videotest.netty.custom.handler;
 
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelHandler;
-import videotest.netty.custom.model.Response;
-import videotest.netty.custom.module.Resource;
+import src.videotest.netty.custom.model.Response;
+import src.videotest.netty.custom.module.Resource;
 
 public class HiHandler extends SimpleChannelHandler {
 

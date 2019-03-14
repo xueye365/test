@@ -1,4 +1,4 @@
-package videotest.netty.custom.model;
+package src.videotest.netty.custom.model;
 
 public class Request {
 

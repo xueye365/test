@@ -1,4 +1,4 @@
-package videotest.netty.custom.testserial;
+package src.videotest.netty.custom.testserial;
 
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;

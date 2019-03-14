@@ -1,4 +1,4 @@
-package videotest.netty.netty5;
+package src.videotest.netty.netty5;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
