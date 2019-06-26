@@ -1,0 +1,21 @@
+1.redis全称：Remote Dictionary Server
+2.数据类型：String ，hash， list ， set ，zset   （HyperLogLog、Geo、Pub/Sub）
+3.加锁： SETEX key seconds value ， set key value px milliseconds nx
+4.keys value*  （独占），scan value*（会有重复，但不阻塞 会 fork（））
+5.BloomFilter
+6.异步 list  rpush/rpop  blpop(阻塞)
+7. sortedset （最小堆排序） zrangebyscore延迟队列 
+8.大量key过期（随机）， （1、线程调用，2.惰性删除3,内存删除）
+    redis 提供 6种数据淘汰策略：
+　　volatile-lru：从已设置过期时间的数据集（server.db[i].expires）中挑选最近最少使用的数据淘汰
+　　volatile-ttl：从已设置过期时间的数据集（server.db[i].expires）中挑选将要过期的数据淘汰
+　　volatile-random：从已设置过期时间的数据集（server.db[i].expires）中任意选择数据淘汰
+　　allkeys-lru：从数据集（server.db[i].dict）中挑选最近最少使用的数据淘汰
+　　allkeys-random：从数据集（server.db[i].dict）中任意选择数据淘汰
+　　no-enviction（驱逐）：禁止驱逐数据
+9.aof ，rdb：bgsave，save ， 启动先启动那个， 频率，aof重写 ，aof会丢失一部分数据
+一般有一个用rdb 其他用aof 
+集群 
+槽
+哨兵
+cluster                        
