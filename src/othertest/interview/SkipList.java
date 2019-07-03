@@ -49,15 +49,17 @@ public class SkipList {
         }
 
         // record every level largest value which smaller than insert value in update[]
+        // 记录update[]中小于insert值的每一级的最大值
         Node p = head;
         for (int i = level - 1; i >= 0; --i) {
             while (p.forwards[i] != null && p.forwards[i].data < value) {
                 p = p.forwards[i];
             }
-            update[i] = p;// use update save node in search path
+            update[i] = p;// use update save node in search path //在搜索路径中使用update save节点
         }
 
         // in search path node next node become new node forwords(next)
+        // 在搜索路径节点中，下一个节点成为新节点forwords(next)
         for (int i = 0; i < level; ++i) {
             newNode.forwards[i] = update[i].forwards[i];
             update[i].forwards[i] = newNode;
@@ -123,6 +125,21 @@ public class SkipList {
 
             return builder.toString();
         }
+    }
+
+
+    public static void main(String[] args) {
+        SkipList skipList = new SkipList();
+        skipList.insert(2);
+        skipList.insert(3);
+//        skipList.insert(1);
+//        skipList.insert(4);
+//        skipList.insert(1);
+//        skipList.insert(5);
+//        skipList.insert(6);
+        skipList.printAll();
+//        sort(new int[]{2,3,1,4,1,5,6}, 7);
+
     }
 
 
