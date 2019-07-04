@@ -11,16 +11,20 @@ public class ReverseWords {
 
 
     public static void main(String[] args) {
-        System.out.println(reverseWords("the sky is blue"));
+        System.out.println(reverseWords("  hello world!  "));
     }
 
     public static String reverseWords(String s) {
+        s = s.trim();
         Stack stack = new Stack();
         String temp = "";
         for (int i = 0; i < s.length(); i++) {
             if (' ' != s.charAt(i)) {
                 temp = temp + s.charAt(i);
             } else {
+                if (i + 1 < s.length() && ' ' == s.charAt(i + 1)) {
+                   continue;
+                }
                 stack.push(temp);
                 temp = "";
             }
@@ -28,10 +32,28 @@ public class ReverseWords {
         stack.push(temp);
         String result = "";
         while (!stack.isEmpty()) {
-            result = result + stack.pop() + " ";
+            result = result + stack.pop() + (stack.isEmpty() ? "" : " ");
         }
         return result;
 
+    }
+
+
+    /**
+     * 最优
+     * @param s
+     * @return
+     */
+    public String reverseWords2(String s) {
+        String[] tmp = s.split(" ");
+        StringBuffer result = new StringBuffer("");
+        for(int i = tmp.length - 1;i >=0 ;i--){
+            if(!tmp[i].equals("")){
+                result.append(tmp[i]);
+                result.append(" ");
+            }
+        }
+        return result.toString().trim();
     }
 
 
