@@ -10,7 +10,7 @@ public class LongestCommonPrefix {
 
 
     public static void main(String[] args) {
-        System.out.println(longestCommonPrefix(new String[]{"abc", "abd"}));
+        System.out.println(longestCommonPrefix(new String[]{"aca", "cba"}));
     }
 
 
@@ -29,11 +29,10 @@ public class LongestCommonPrefix {
                 }
                 countSame++;
             }
-            if (i != same.length()) {
-                break;
-            }
             if (countSame == strs.length) {
                 same = same + a;
+            } else {
+                break;
             }
         }
         return same;
