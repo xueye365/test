@@ -1,10 +1,12 @@
 package src.leetcode;
 
 import java.util.ArrayDeque;
-import java.util.Stack;
 
 /**
  *   简化路径
+ *
+ *   https://leetcode-cn.com/explore/interview/card/bytedance/242/string/1013/
+ *
  */
 public class SimplifyPath {
 
