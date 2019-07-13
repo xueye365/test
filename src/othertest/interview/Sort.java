@@ -2,7 +2,6 @@ package src.othertest.interview;
 
 
 
-import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
