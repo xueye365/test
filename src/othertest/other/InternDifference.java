@@ -1,5 +1,8 @@
 package src.othertest.other;
 
+/**
+ * String.intern方法
+ */
 public class InternDifference {
 
 

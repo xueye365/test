@@ -1,31 +1,36 @@
 package src.othertest.other;
 
 
-import java.util.HashMap;
-import java.util.HashSet;
+import java.lang.ref.PhantomReference;
+import java.lang.ref.Reference;
+import java.lang.ref.ReferenceQueue;
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 
 public class Test {
-    static int depth = 0;
 
-    public static void main(String[] args) throws Exception {
-        System.out.println(f(5));
-        HashSet hashSet = new HashSet();
-        HashMap hashMap = new HashMap();
-    }
-
-
-    public static int f(int n) throws Exception{
-        ++depth;
-        if (depth > 1000) throw new Exception();
-
-        if (n == 1) {
-            return 1;
-        } else if (n == 0) {
-            return 0;
-        } else {
-            return f(n-1) +  f(n-2);
+    // 被回收的饮用会放到queue中
+    public static void main(String[] args) {
+        ArrayList a = new ArrayList();
+        ReferenceQueue queue = new ReferenceQueue();
+        for (int i = 0; i < 10; i++) {
+            a.add(new PhantomReference<>(new String("asfd"), queue));
+        }
+         System.gc();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Reference ref;
+        while ((ref = queue.poll()) != null) {
+            System.out.println(ref);
         }
     }
+
+
+
+
 
 }
 

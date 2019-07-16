@@ -1,7 +1,6 @@
-package src.othertest.interview;
+package src.othertest.arithmetic;
 
 import java.util.ArrayDeque;
-import java.util.LinkedList;
 
 /**
  * 树

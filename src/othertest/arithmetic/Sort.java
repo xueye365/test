@@ -1,4 +1,4 @@
-package src.othertest.interview;
+package src.othertest.arithmetic;
 
 
 

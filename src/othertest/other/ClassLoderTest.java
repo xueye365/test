@@ -6,6 +6,9 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.URL;
 
+/**
+ * 类加载
+ */
 public class ClassLoderTest {
 
     public static void main(String[] args) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
