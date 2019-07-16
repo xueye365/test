@@ -6,7 +6,7 @@ import java.util.concurrent.FutureTask;
 public class CycleWait {
 
     public static void main(String[] args) {
-        ThreadDemo demo = new ThreadDemo();
+        src.othertest.thread.ThreadDemo demo = new src.othertest.thread.ThreadDemo();
         Thread thread = new Thread(demo);
         thread.start();
         // 循环主线程以等待参数被赋值
@@ -28,7 +28,7 @@ public class CycleWait {
 //        System.out.println(demo.value);
 
         // FutureTask 的方式
-        FutureTask task = new FutureTask(new CallableDemo());
+        FutureTask task = new FutureTask(new src.othertest.thread.CallableDemo());
         new Thread(task).start();
 
         if (!task.isDone()){
