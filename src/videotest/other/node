@@ -5,9 +5,22 @@
     2.返回值:              execute没有返回值                    submit有返回值
     3.异常：               execute中的是Runnable接口的实现，所以只能使用try、catch来捕获CheckedException，通过实现UncaughtExceptionHande接口处理UncheckedException
                           submit中抛出异常,不管提交的是Runnable还是Callable类型的任务，如果不对返回值Future调用get()方法，都会吃掉异常
+    4.来源不用：           execute()在Executor接口中             submit在ExecutorService接口中
     ps:submit可以接受Runnable的时候，Runnable返回值为void，所以使用Future的get()获得的还是null
 
 二. 同一个事务使用同一个sqlSession，是一个数据库连接， 每次都fetch sqlSession from current transaction
+
+
+三.
+                                                    corePoolSize,   maximumPoolSize,  keepAliveTime,  TimeUnit unit,            BlockingQueue<Runnable> workQueue
+   Executors.newFixedThreadPool(2);                 n               n                 0               TimeUnit.MILLISECONDS     LinkedBlockingQueue
+   Executors.newSingleThreadExecutor();             1               1                 0               TimeUnit.MILLISECONDS     LinkedBlockingQueue
+   Executors.newCachedThreadPool();                 0               Integer.MAX_VALUE 60              TimeUnit.SECONDS          SynchronousQueue
+   Executors.newSingleThreadScheduledExecutor();    1               Integer.MAX_VALUE 0               NANOSECONDS               DelayedWorkQueue
+   Executors.newScheduledThreadPool(3);             n               Integer.MAX_VALUE 0               NANOSECONDS               DelayedWorkQueue
+   Executors.newWorkStealingPool(3);                n               forkJoin 工作窃取
+  
+
 
 
 
