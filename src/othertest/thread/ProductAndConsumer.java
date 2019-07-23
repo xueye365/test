@@ -19,7 +19,7 @@ public class ProductAndConsumer<T> {
     Condition notNull = lock.newCondition();
     Condition notFull = lock.newCondition();
 
-    ProductAndConsumer(int length){
+    ProductAndConsumer(int length) {
         this.length = length;
         this.objects = new Object[length];
         this.start = 0;
@@ -29,6 +29,7 @@ public class ProductAndConsumer<T> {
 
     /**
      * 使用synchronized实现
+     *
      * @param obj
      */
     synchronized public void put(T obj) {
@@ -40,7 +41,7 @@ public class ProductAndConsumer<T> {
             }
         } else {
             this.objects[end] = obj;
-            if (++end == length){
+            if (++end == length) {
                 end = 0;
             }
             count++;
@@ -57,8 +58,8 @@ public class ProductAndConsumer<T> {
                 e.printStackTrace();
             }
         } else {
-            T obj = (T)this.objects[start];
-            if (++start == length){
+            T obj = (T) this.objects[start];
+            if (++start == length) {
                 start = 0;
             }
             count--;
@@ -71,6 +72,7 @@ public class ProductAndConsumer<T> {
 
     /**
      * 使用lock实现
+     *
      * @param obj
      */
     public void put2(T obj) {
@@ -83,7 +85,7 @@ public class ProductAndConsumer<T> {
             }
         } else {
             this.objects[end] = obj;
-            if (++end == length){
+            if (++end == length) {
                 end = 0;
             }
             count++;
@@ -102,8 +104,8 @@ public class ProductAndConsumer<T> {
                 e.printStackTrace();
             }
         } else {
-            T obj = (T)this.objects[start];
-            if (++start == length){
+            T obj = (T) this.objects[start];
+            if (++start == length) {
                 start = 0;
             }
             count--;
@@ -113,20 +115,22 @@ public class ProductAndConsumer<T> {
         return null;
     }
 
-
+    /**
+     * 验证interrupt是不会结束线程的
+     */
     public static void test() {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
                 int i = 0;
-                while (true) {
-                    try {
+                try {
+                    while (true) {
                         Thread.sleep(200);
                         i++;
                         System.out.println(i);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
                     }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         };
@@ -135,6 +139,7 @@ public class ProductAndConsumer<T> {
         t.start();
         System.out.println(t.getState());
         t.interrupt();
+        // 这行会打印RUNNABLE，因为它会等待线程运行完，并不会直接退出
         System.out.println(t.getState());
         try {
             Thread.sleep(300);
@@ -143,8 +148,6 @@ public class ProductAndConsumer<T> {
         }
         System.out.println(t.getState());
     }
-
-
 
     public static void main(String[] args) {
 //        ProductAndConsumer productAndConsumer = new ProductAndConsumer(3);
@@ -156,11 +159,9 @@ public class ProductAndConsumer<T> {
 //        System.out.println(productAndConsumer.get2());
 //        System.out.println(productAndConsumer.get2());
 
-        test();
-
+//        test();
 
     }
-
 
 
 }
