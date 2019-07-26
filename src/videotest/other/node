@@ -19,7 +19,62 @@
    Executors.newSingleThreadScheduledExecutor();    1               Integer.MAX_VALUE 0               NANOSECONDS               DelayedWorkQueue
    Executors.newScheduledThreadPool(3);             n               Integer.MAX_VALUE 0               NANOSECONDS               DelayedWorkQueue
    Executors.newWorkStealingPool(3);                n               forkJoin 工作窃取
-  
+
+四.
+    结构             初始长度                   扩容
+    Arraylist       DEFAULT_CAPACITY = 10      0.5倍
+    Vector          DEFAULT_CAPACITY = 10      1倍
+
+
+
+    HashMap
+    1.8之前使用entry，1.8使用node
+    TREEIFY_THRESHOLD = 8, MIN_TREEIFY_CAPACITY = 64 当链表长度超过8.并且整个map总容量超过64的时候会产生树化（treeifyBin），当链表长度超过8.但整个map总容量未超过64的时候会扩容（resize）
+    UNTREEIFY_THRESHOLD = 6
+    在首次使用的时候初始化，初始化容量：16，扩容因子：0.75，扩容两倍后重排
+    key要是不可变的，因为key如果变了
+
+    conccurentHashMap
+    1.8之前使用Segment来实现，1.8之后使用更细粒度的锁：每个树或者每个链表一个锁，锁定的时候锁的是链表头结点或者树的根
+    sizeCtl 负数：-1代表正在初始化，-n：有n-1个线程正在扩容，整数或者0：hash表还没被初始化，下一次要扩容的大小，使用volatil修饰
+    不允许插入空键，而hashmap可以插入空键
+    初始化也是延迟加载
+
+    computeIfAbsent 构建本地缓存
+    put方法实现：1.判断node[]数组是否初始化，没有则进行初始化
+                2.通过hash定位数组索引，判断是否有node节点，如果没有则使用cas进行添加链表头结点，添加失败会重复循环进行尝试
+                3.如果检查到内部正在扩容，就帮助他一起扩容helpTransfer方法
+                4.如果头结点不为空，则用synchronized锁住元素（链表或者红黑二叉树）
+                5.检查链表长度，是否超过8，转换成
+
+    size（）方法和mappingCount（）方法的异同，两者计算是否准确
+    多线程下如何扩容
+
+五.
+    闭锁：countDownLatch，countDown方法，让主线程等待一组时间发生后继续执行
+    栅栏：CyclicBarrier await方法，
+    信号量：Semaphone aqquire（）获取许可， release（）释放许可
+    交换器：Exchanger.exchange()   交换两个线程的数据
+
+
+
+    CAS是java.util.concurrent.atomic的基础
+    AQS是java.util.concurrent.locks的基础以及一些常用类：Semophore，ReentrantLock
+    resize（）
+
+
+
+六.remainingCapacity:查看剩余容量
+   drainTo：将集合中的数据转移到指定集合中
+
+
+
+七：
+    BIO：传统IO
+
+
+
+
 
 
 
