@@ -8,12 +8,18 @@ import java.net.URL;
 
 /**
  * 类加载
+ * ClassLoader.getSystemClassLoader() static
+ * ClassLoader.initSystemClassLoader() static
+ * Launcher.getLauncher() static 加载的时候直接创建对应的对象
+ * Launcher.ExtClassLoader.getExtClassLoader()
+ * Launcher.AppClassLoader.getAppClassLoader(var1)
+ * ClassLoader.loadClass()
  */
 public class ClassLoderTest {
 
     public static void main(String[] args) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
 
-        // 跟节点
+        // 根加载器
         URL[] urls=sun.misc.Launcher.getBootstrapClassPath().getURLs();
         for (int i = 0; i < urls.length; i++) {
             System.out.println(urls[i]);
@@ -39,17 +45,6 @@ public class ClassLoderTest {
         System.out.println(c.getClassLoader().getParent().getParent().getParent());
         c.newInstance();
         System.out.println("123");
-
-
-        // 隐式加载
-        Test test = new Test();
-        // 显示加载
-        // 需要显示调用newInstance，和反射方法构造方法
-
-        // loadClass
-        // forName
-
-
     }
 
 }
