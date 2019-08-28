@@ -1,4 +1,4 @@
-package src.othertest.other;
+package src.othertest.share;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -27,13 +27,19 @@ public class ClassLoderTest {
         // jdk1.8.0_111/jre/lib
 
 
+        //BootClassPathHolder
+        System.out.println(System.getProperty("sun.boot.class.path"));
+        System.out.println();
+
         // extClassLoder
         System.out.println(System.getProperty("java.ext.dirs"));
+        System.out.println();
         // D:\Program Files\Java\jdk1.8.0_111\jre\lib\ext
 
 
         // appClassLoader
         System.out.println(System.getProperty("java.class.path")) ;
+        System.out.println();
         // D:\Program Files\Java\jdk1.8.0_111\jre\lib\ ;D:\test2\test\out (ext中的也会加载)
 
 

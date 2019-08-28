@@ -69,15 +69,32 @@
 
 
 
-七：
-    BIO：传统IO
 
-
-
-
-
-
-
+ -Xss256k
+ -Xms1024m
+ -Xmx 6044m
+ -XX:MaxMetaspaceSize=512m
+ -XX:+HeapDumpOnOutOfMemoryError
+ -XX:HeapDumpPath=/home/work/www/finance-web/var/log
+ -XX:ErrorFile=/home/work/www/finance-web/var/log/jvm_err.log
+ -XX:+UseParNewGC
+ -XX:+UseConcMarkSweepGC
+ -XX:ConcGCThreads=2
+ -XX:ParallelGCThreads=2
+ -XX:+ScavengeBeforeFullGC
+ -XX:+CMSScavengeBeforeRemark   进行内存整理的频次
+ -XX:+CMSParallelRemarkEnabled
+ -XX:CMSInitiatingOccupancyFraction=70
+ -XX:+UseGCLogFileRotation
+ -XX:NumberOfGCLogFiles=5
+ -XX:GCLogFileSize=50M
+ -verbose:gc
+ -XX:+PrintHeapAtGC
+ -XX:+PrintGCDetails
+ -XX:+PrintGCDateStamps
+ -XX:+PrintGCTimeStamps
+ -XX:+PrintGCApplicationStoppedTime
+ -Xloggc:/home/work/www/finance-web/var/log/gc.log
 
 
 
