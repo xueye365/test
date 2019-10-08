@@ -38,7 +38,6 @@ class IntelCpu implements Cpu {
     }
     @Override
     public void calculate() {
-        // TODO Auto-generated method stub
         System.out.println("Intel CPU的针脚数：" + pins);
     }
 
@@ -53,7 +52,6 @@ class AmdCpu implements Cpu {
     }
     @Override
     public void calculate() {
-        // TODO Auto-generated method stub
         System.out.println("AMD CPU的针脚数：" + pins);
     }
 }
@@ -73,7 +71,6 @@ class IntelMainboard implements Mainboard {
     }
     @Override
     public void installCPU() {
-        // TODO Auto-generated method stub
         System.out.println("Intel主板的CPU插槽孔数是：" + cpuHoles);
     }
 }
@@ -92,7 +89,6 @@ class AmdMainboard implements Mainboard {
     }
     @Override
     public void installCPU() {
-        // TODO Auto-generated method stub
         System.out.println("AMD主板的CPU插槽孔数是：" + cpuHoles);
     }
 }
@@ -114,13 +110,11 @@ class IntelFactory implements AbstractFactory {
 
     @Override
     public Cpu createCpu() {
-        // TODO Auto-generated method stub
         return new IntelCpu(755);
     }
 
     @Override
     public Mainboard createMainboard() {
-        // TODO Auto-generated method stub
         return new IntelMainboard(755);
     }
 
@@ -129,13 +123,11 @@ class AmdFactory implements AbstractFactory {
 
     @Override
     public Cpu createCpu() {
-        // TODO Auto-generated method stub
         return new IntelCpu(938);
     }
 
     @Override
     public Mainboard createMainboard() {
-        // TODO Auto-generated method stub
         return new IntelMainboard(938);
     }
 

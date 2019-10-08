@@ -25,7 +25,6 @@ public class TreeTest {
         order(a);
     }
 
-    // todo 按层排序
     public static void order(Tree node) {
         if (node == null) {
             return;

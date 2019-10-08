@@ -1,4 +1,4 @@
-package src.leetcode;
+package leetcode;
 
 /**
  * 字符串转换整数

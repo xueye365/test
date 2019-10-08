@@ -1,4 +1,4 @@
-package src.leetcode;
+package leetcode;
 
 /**
  * 最长公共前缀
