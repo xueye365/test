@@ -22,9 +22,12 @@ public class Test {
 //            }).start();
 //        }
 
-        Integer a = new Integer(2);
-        testr(a);
-        System.out.println(a);
+//        Integer a = new Integer(2);
+//        testr(a);
+//        System.out.println(a);
+
+        String s = new String();
+        System.out.println(s);
     }
 
     public static void testr(Integer a) {
