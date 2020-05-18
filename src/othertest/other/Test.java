@@ -3,6 +3,8 @@ package othertest.other;
 
 import com.seventh7.mybatis.util.CollectionUtils;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -25,9 +27,10 @@ public class Test {
 //        Integer a = new Integer(2);
 //        testr(a);
 //        System.out.println(a);
+        Double aDouble = new Double(-1.50);
+        BigDecimal bigDecimal = BigDecimal.valueOf(aDouble).setScale(0, RoundingMode.HALF_UP);
 
-        String s = new String();
-        System.out.println(s);
+        System.out.println(bigDecimal);
     }
 
     public static void testr(Integer a) {
