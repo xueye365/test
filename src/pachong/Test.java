@@ -4,6 +4,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 爬虫
+ *
+ * https://www.haozu.com/sh/zuxiezilou/  好租页面信息，整个城市的全部写字楼信息
+ *
+ * https://office.3fang.com/nb/list/loupan  三方页面信息，整个城市的全部写字楼信息，及写字楼下的房源信息
+ *
+ */
 public class Test {
 
     public static void main(String[] args) {
