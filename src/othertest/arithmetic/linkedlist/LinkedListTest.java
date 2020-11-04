@@ -1,4 +1,4 @@
-package leetcode.other;
+package othertest.arithmetic.linkedlist;
 
 
 /**
