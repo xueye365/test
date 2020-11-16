@@ -21,15 +21,14 @@ public class Palindrome {
         for(int i =0; i < data.length; i++){
             link.insertTail(data[i]);
         }
-        head = link.inverseLinkList_head(head);
         link.printAll();
-//        System.out.println("打印原始:");
-//        link.printAll();
-//        if (link.palindrome()){
-//            System.out.println("回文");
-//        }else{
-//            System.out.println("不是回文");
-//        }
+        System.out.println("打印原始:");
+        link.printAll();
+        if (link.palindrome()){
+            System.out.println("回文");
+        }else{
+            System.out.println("不是回文");
+        }
     }
 
     //顺序插入
@@ -124,7 +123,7 @@ public class Palindrome {
         */
         Node result = new Node(0, null);
         Node p = node;
-        while (p.next != null) {
+        while (p != null) {
             Node temp = p.next;
             p.next = result.next;
             result.next = p;

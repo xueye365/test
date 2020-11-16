@@ -53,10 +53,10 @@ public class LinkedListTest {
     public static boolean checkCircle(Node list) {
         if (list == null) {return false;}
 
-        Node fast = list;
+        Node fast = list.getNext();
         Node slow = list;
 
-        while (fast != null && slow != null) {
+        while (fast != null && fast.getNext() != null) {
             fast = fast.getNext().getNext();
             slow = slow.getNext();
             if (fast == slow) {
@@ -117,7 +117,7 @@ public class LinkedListTest {
      * 删除链表倒数第n个结点
      * @return
      */
-    public static void mergeSortedLists(Node node, int n){
+    public static void deleteLastN(Node node, int n){
         if (node == null || n <= 0) {
             return;
         }
