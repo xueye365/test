@@ -1,4 +1,4 @@
-package src.othertest.arithmetic;
+package othertest.arithmetic;
 
 /**
  * 二分查找
@@ -43,6 +43,86 @@ public class Search {
     }
 
 
+    /**
+     * 查找最后一个等于这个数的位置
+     * @param a
+     * @param n
+     * @param value
+     * @return
+     */
+    public static int bsearchlastOne(int[] a, int n, int value) {
+        int low = 0;
+        int high = n - 1;
+        while (low <= high) {
+            int mid = low + (high - low) >> 1;
+            if (a[mid] > value) {
+                high = mid - 1;
+            } else if (a[mid] < value) {
+                low = mid + 1;
+            } else {
+                if (mid != n - 1 && a[mid + 1] != value) {
+                    return mid;
+                } else {
+                    low = mid + 1;
+                }
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * 查找第一个大于等于这个数的位置
+     * @param a
+     * @param n
+     * @param value
+     * @return
+     */
+    public static int bsearchFirstBiggerOne(int[] a, int n, int value) {
+        int low = 0;
+        int high = n - 1;
+        while (low <= high) {
+            int mid = low + (high - low) >> 1;
+            if (a[mid] >= value) {
+                if (mid == n - 1 || a[mid - 1] < value) {
+                    return mid;
+                } else {
+                    high = mid + 1;
+                }
+            } else {
+                low = mid + 1;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * 查找最后一个小于等于这个数的位置
+     * @param a
+     * @param n
+     * @param value
+     * @return
+     */
+    public static int bsearchLastLowerOne(int[] a, int n, int value) {
+        int low = 0;
+        int high = n - 1;
+        while (low <= high) {
+            int mid = low + (high - low) >> 1;
+            if (a[mid] > value) {
+                high = mid - 1;
+            } else {
+                if (mid == n - 1 || a[mid + 1] > value)  {
+                    return mid;
+                } else {
+                    low = mid + 1;
+                }
+            }
+        }
+        return -1;
+    }
+
+
+
+    // 正常的二分
     public static int bsearch(int[] a, int value) {
         int low = 0;
         int high = a.length - 1;

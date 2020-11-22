@@ -26,6 +26,9 @@ import java.util.List;
  *      0          47       286                     3200        无穷
  *
  *
+ *      数据库里面的Order BY, 如果有limit限制，则是堆排序。如果数据无法全部读入内存，则是归并排序，否则是快排
+ *      有索引的话是b+树的排序
+ *
  */
 public class Sort {
 
