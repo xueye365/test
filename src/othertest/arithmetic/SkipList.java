@@ -1,4 +1,4 @@
-package src.othertest.arithmetic;
+package othertest.arithmetic;
 
 
 import java.util.Random;
@@ -44,9 +44,10 @@ public class SkipList {
         newNode.data = value;
         newNode.maxLevel = level;
         Node update[] = new Node[level];
-        for (int i = 0; i < level; ++i) {
-            update[i] = head;
-        }
+        // 个人认为这里加不加都行
+//        for (int i = 0; i < level; ++i) {
+//            update[i] = head;
+//        }
 
         // record every level largest value which smaller than insert value in update[]
         // 记录update[]中小于insert值的每一级的最大值
@@ -132,12 +133,14 @@ public class SkipList {
         SkipList skipList = new SkipList();
         skipList.insert(2);
         skipList.insert(3);
-//        skipList.insert(1);
-//        skipList.insert(4);
-//        skipList.insert(1);
-//        skipList.insert(5);
-//        skipList.insert(6);
+        skipList.insert(1);
+        skipList.insert(4);
+        skipList.insert(1);
+        skipList.insert(5);
+        skipList.insert(6);
         skipList.printAll();
+        Node node = skipList.find(5);
+        System.out.println(node);
 //        sort(new int[]{2,3,1,4,1,5,6}, 7);
 
     }
