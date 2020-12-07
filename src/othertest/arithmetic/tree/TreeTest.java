@@ -1,4 +1,4 @@
-package src.othertest.arithmetic;
+package othertest.arithmetic.tree;
 
 import java.util.ArrayDeque;
 
@@ -103,6 +103,11 @@ public class TreeTest {
         }
     }
 
+    // 如果要删除的节点有两个子节点，
+    // 我们需要找到这个节点的右子树中的最小节点，把它替换到要删除的节点上。
+    // 因为最小节点肯定没有左子节点（如果有左子结点，那就不是最小节点了）
+    // 也可以找左子树的最大节点(如果柚子树的最小结点没有的话)
+    // 所以，我们可以应用上面两条规则来删除这个最小节点。
     public void delete(int data) {
         Node p = tree; // p指向要删除的节点，初始化指向根节点
         Node pp = null; // pp记录的是p的父节点
@@ -122,7 +127,7 @@ public class TreeTest {
                 minP = minP.left;
             }
             p.data = minP.data; // 将minP的数据替换到p中
-            p = minP; // 下面就变成了删除minP了
+            p = minP; // 下面就变成了删除minP了，这里并没有改变原始p字段
             pp = minPP;
         }
 
@@ -157,12 +162,7 @@ public class TreeTest {
 
 
     /**
-     * 平衡二叉查找树
-     * 平衡二叉树的严格定义是这样的：二叉树中任意一个节点的左右子树的高度相差不能大于 1
-     *
-     * AVL树
-     * 查询效率特别高，但插入、删除，为了维持这种高度的平衡，就要付出更多的代价
-     *
+
      *
      * 红黑树
      *
@@ -197,9 +197,9 @@ public class TreeTest {
      * 2.要求字符串的前缀重合比较多，不然会造成浪费
      * 3.没有现成的实现
      * 4.通过指针串起来的数据块是不连续的，而 Trie 树中用到了指针，缓存不友好
-     *
-     *
-     *
+     * Trie 树是非常耗内存的，用的是一种空间换时间的思路”
+     * 我们可以稍微牺牲一点查询的效率，将每个节点中的数组换成其他数据结构，来存储一个节点的子节点指针。用哪种数据结构呢？我们的选择其实有很多，比如有序数组、跳表、散列表、红黑树等。
+     * Trie 树的变体有很多，都可以在一定程度上解决内存消耗的问题。比如，缩点优化
      */
 
     public class Trie {
