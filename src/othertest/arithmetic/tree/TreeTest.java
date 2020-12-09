@@ -185,67 +185,6 @@ public class TreeTest {
      */
 
 
-    /**
-     * 字典树
-     * Trie 树的本质，就是利用字符串之间的公共前缀，将重复的前缀合并在一起
-     *
-     * 构建 Trie 树的过程，需要扫描所有的字符串，时间复杂度是 O(n)
-     * 构建好 Trie 树后，在其中查找字符串的时间复杂度是 O(k)，k 表示要查找的字符串的长度
-     *
-     * 它对要处理的字符串有及其严苛的要求
-     * 1.字符串中包含的字符集不能太大，会造成浪费
-     * 2.要求字符串的前缀重合比较多，不然会造成浪费
-     * 3.没有现成的实现
-     * 4.通过指针串起来的数据块是不连续的，而 Trie 树中用到了指针，缓存不友好
-     * Trie 树是非常耗内存的，用的是一种空间换时间的思路”
-     * 我们可以稍微牺牲一点查询的效率，将每个节点中的数组换成其他数据结构，来存储一个节点的子节点指针。用哪种数据结构呢？我们的选择其实有很多，比如有序数组、跳表、散列表、红黑树等。
-     * Trie 树的变体有很多，都可以在一定程度上解决内存消耗的问题。比如，缩点优化
-     */
-
-    public class Trie {
-        private TrieNode root = new TrieNode('/'); // 存储无意义字符
-
-        // 往 Trie 树中插入一个字符串
-        public void insert(char[] text) {
-            TrieNode p = root;
-            for (int i = 0; i < text.length; ++i) {
-                int index = text[i] - 'a';
-                if (p.children[index] == null) {
-                    TrieNode newNode = new TrieNode(text[i]);
-                    p.children[index] = newNode;
-                }
-                p = p.children[index];
-            }
-            p.isEndingChar = true;
-        }
-
-        // 在 Trie 树中查找一个字符串
-        public boolean find(char[] pattern) {
-            TrieNode p = root;
-            for (int i = 0; i < pattern.length; ++i) {
-                int index = pattern[i] - 'a';
-                if (p.children[index] == null) {
-                    return false; // 不存在 pattern
-                }
-                p = p.children[index];
-            }
-            if (p.isEndingChar == false) return false; // 不能完全匹配，只是前缀
-            else return true; // 找到 pattern
-        }
-
-        public class TrieNode {
-            public char data;
-            public TrieNode[] children = new TrieNode[26];
-            public boolean isEndingChar = false;
-            public TrieNode(char data) {
-                this.data = data;
-            }
-        }
-    }
-
-
-
-
 
 
 
