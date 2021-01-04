@@ -114,11 +114,15 @@ public class Graph {
      */
 
     boolean found = false; // 全局变量或者类成员变量
-
+    // 从顶点s到顶点t
     public void dfs(int s, int t) {
+        // 是否已经找到
         found = false;
+        // 是否查询过
         boolean[] visited = new boolean[v];
+        // 搜索路径
         int[] prev = new int[v];
+        // 初始化是否查询过的数组
         for (int i = 0; i < v; ++i) {
             prev[i] = -1;
         }
