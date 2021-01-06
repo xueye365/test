@@ -279,7 +279,7 @@ public class Algorithm {
         }
     }
 
-    // 升级难度之后的递归算法
+    // 升级难度之后的动态规划
     public static int knapsack3(int[] weight, int[] value, int n, int w) {
         int[][] states = new int[n][w+1];
         for (int i = 0; i < n; ++i) { // 初始化states
@@ -311,6 +311,36 @@ public class Algorithm {
         }
         return maxvalue;
     }
+
+    // 空间复杂度优化，变成数组存储
+    private static int knapsack4(int[] weight, int[] value, int n, int w) {
+        int[] temp = new int[w + 1];
+        for (int j = 0; j < w+1; ++j) {
+            temp[j] = -1;
+        }
+        temp[0] = 0;
+        if (weight[0] <= w) {
+            temp[weight[0]] = value[0];
+        }
+        for (int i = 1; i < n; i++) {
+            for (int j = w - weight[i]; j >= 0; j--) {
+                if (j + weight[i] <= w && temp[j] >= 0) {
+                    int v = value[i] + temp[j];
+                    if (v > temp[j + weight[i]]) {
+                        temp[j + weight[i]] = v;
+                    }
+                }
+            }
+        }
+        int maxValue = 0;
+        for (int i = w; i >= 0; i--) {
+            if (temp[i] > maxValue) {
+                maxValue = temp[i];
+            }
+        }
+        return maxValue;
+    }
+
 
 
     /**
