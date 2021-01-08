@@ -378,6 +378,192 @@ public class Algorithm {
     }
 
 
+    // 假设我们有一个 n 乘以 n 的矩阵 w[n][n]。矩阵存储的都是正整数。棋子起始位置在左上角，终止位置在右下角。最短路径长度是多少呢？
+    // min_dist(i, j) = w[i][j] + min(min_dist(i, j-1), min_dist(i-1, j))
+
+
+    private int minDist = Integer.MAX_VALUE; // 全局变量或者成员变量
+    // 调用方式：minDistBacktracing(0, 0, 0, w, n);
+    public void minDistBT(int i, int j, int dist, int[][] w, int n) {
+        // 到达了n-1, n-1这个位置了，这里看着有点奇怪哈，你自己举个例子看下
+        if (i == n && j == n) {
+            if (dist < minDist) minDist = dist;
+            return;
+        }
+        if (i < n) { // 往下走，更新i=i+1, j=j
+            minDistBT(i + 1, j, dist+w[i][j], w, n);
+        }
+        if (j < n) { // 往右走，更新i=i, j=j+1
+            minDistBT(i, j+1, dist+w[i][j], w, n);
+        }
+    }
+
+
+    // 状态转移表法
+    public int minDistDP(int[][] matrix, int n) {
+        int[][] states = new int[n][n];
+        int sum = 0;
+        for (int j = 0; j < n; ++j) { // 初始化states的第一行数据
+            sum += matrix[0][j];
+            states[0][j] = sum;
+        }
+        sum = 0;
+        for (int i = 0; i < n; ++i) { // 初始化states的第一列数据
+            sum += matrix[i][0];
+            states[i][0] = sum;
+        }
+        for (int i = 1; i < n; ++i) {
+            for (int j = 1; j < n; ++j) {
+                states[i][j] = matrix[i][j] + Math.min(states[i][j-1], states[i-1][j]);
+            }
+        }
+        return states[n-1][n-1];
+    }
+
+    // 状态转移方程法
+    private int[][] matrix = {{1,3,5,9}, {2,1,3,4},{5,2,6,7},{6,8,4,3}};
+    private int n = 4;
+    private int[][] mem = new int[4][4];
+    public int minDist(int i, int j) { // 调用minDist(n-1, n-1);
+        if (i == 0 && j == 0) return matrix[0][0];
+        if (mem[i][j] > 0) return mem[i][j];
+        int minLeft = Integer.MAX_VALUE;
+        if (j-1 >= 0) {
+            minLeft = minDist(i, j-1);
+        }
+        int minUp = Integer.MAX_VALUE;
+        if (i-1 >= 0) {
+            minUp = minDist(i-1, j);
+        }
+
+        int currMinDist = matrix[i][j] + Math.min(minLeft, minUp);
+        mem[i][j] = currMinDist;
+        return currMinDist;
+    }
+
+
+
+
+    // 莱温斯坦距离，表示两个字符串差异的大小
+    // 下面是回溯算法计算的
+
+    // 可以删除 a[i]，然后递归考察 a[i+1]和 b[j]；
+    // 可以删除 b[j]，然后递归考察 a[i]和 b[j+1]；
+    // 可以在 a[i]前面添加一个跟 b[j]相同的字符，然后递归考察 a[i]和 b[j+1];
+    // 可以在 b[j]前面添加一个跟 a[i]相同的字符，然后递归考察 a[i+1]和 b[j]；
+    // 可以将 a[i]替换成 b[j]，或者将 b[j]替换成 a[i]，然后递归考察 a[i+1]和 b[j+1]。
+
+    // 在递归树中，(i, j) 两个变量重复的节点很多，比如 (3, 2) 和 (2, 3)。对于 (i, j) 相同的节点，我们只需要保留 edist 最小的，继续递归处理就可以了，剩下的节点都可以舍弃
+    private static char[] a = "mitcmu".toCharArray();
+    private static char[] b = "mtacnu".toCharArray();
+    private static int nn = 6;
+    private static int mm = 6;
+    private static int min = Integer.MAX_VALUE; // 存储结果
+    // edist 表示处理到 a[i]和 b[j]时，已经执行的编辑操作的次数。
+    public static void lwstBT(int i, int j, int edist) {
+        if (i == nn || j == mm) {
+            // nn - i：字符串a需要修改的次数
+            // mm - i：字符串b需要修改的次数
+            // 在某一个字符查看完之后，另一个字符可能全部查看完，这个代码是计算剩下的不同
+            if (i < nn) edist += (nn - i);
+            if (j < mm) edist += (mm - j);
+            if (edist < min) min = edist;
+            return;
+        }
+        if (a[i] == b[j]) { // 两个字符匹配
+            lwstBT(i+1, j+1, edist);
+        } else { // 两个字符不匹配
+            lwstBT(i + 1, j, edist + 1); // 删除a[i]或者b[j]前添加一个字符
+            lwstBT(i, j + 1, edist + 1); // 删除b[j]或者a[i]前添加一个字符
+            lwstBT(i + 1, j + 1, edist + 1); // 将a[i]和b[j]替换为相同字符
+        }
+    }
+
+
+
+    // 莱温斯坦动态规划解决
+    // 状态 (i, j) 可能从 (i-1, j)，(i, j-1)，(i-1, j-1) 三个状态中的任意一个转移过来
+    public int lwstDP(char[] a, int n, char[] b, int m) {
+        int[][] minDist = new int[n][m];
+        for (int j = 0; j < m; ++j) { // 初始化第0行:a[0..0]与b[0..j]的编辑距离
+            if (a[0] == b[j]) minDist[0][j] = j;
+            else if (j != 0) minDist[0][j] = minDist[0][j-1]+1;
+            else minDist[0][j] = 1;
+        }
+        for (int i = 0; i < n; ++i) { // 初始化第0列:a[0..i]与b[0..0]的编辑距离
+            if (a[i] == b[0]) minDist[i][0] = i;
+            else if (i != 0) minDist[i][0] = minDist[i-1][0]+1;
+            else minDist[i][0] = 1;
+        }
+        for (int i = 1; i < n; ++i) { // 按行填表
+            for (int j = 1; j < m; ++j) {
+                if (a[i] == b[j]) {
+                    // [i-1][j]+1 是i-1前面增加一个字符然后和j进行比较，+1表示有过一次变更
+                    // [i-1][j-1] 表示两个字符相同，直接对比下一个，不需要加一
+                    minDist[i][j] = min(minDist[i-1][j]+1, minDist[i][j-1]+1, minDist[i-1][j-1]);
+                } else {
+                    // 当i和j对应的字符不相等时，则代表不论从哪个路径过来的数据都需要再进行一次修改所以都加一
+                    minDist[i][j] = min(minDist[i-1][j]+1, minDist[i][j-1]+1, minDist[i-1][j-1]+1);
+                }
+            }
+        }
+        return minDist[n-1][m-1];
+    }
+
+    private int min(int x, int y, int z) {
+        int minv = Integer.MAX_VALUE;
+        if (x < minv) minv = x;
+        if (y < minv) minv = y;
+        if (z < minv) minv = z;
+        return minv;
+    }
+
+
+    // 计算最长公共子串长度
+
+    // 如果 a[i]与 b[j]互相匹配，我们将最大公共子串长度加一，并且继续考察 a[i+1]和 b[j+1]。
+    // 如果 a[i]与 b[j]不匹配，最长公共子串长度不变，这个时候，有两个不同的决策路线：
+    // 删除 a[i]，或者在 b[j]前面加上一个字符 a[i]，然后继续考察 a[i+1]和 b[j]；
+    // 删除 b[j]，或者在 a[i]前面加上一个字符 b[j]，然后继续考察 a[i]和 b[j+1]。
+
+
+    public static int lcs(char[] a, int n, char[] b, int m) {
+        int[][] maxlcs = new int[n][m];
+        for (int j = 0; j < m; ++j) {//初始化第0行：a[0..0]与b[0..j]的maxlcs
+            if (a[0] == b[j]) maxlcs[0][j] = 1;
+            else if (j != 0) maxlcs[0][j] = maxlcs[0][j-1];
+            else maxlcs[0][j] = 0;
+        }
+        for (int i = 0; i < n; ++i) {//初始化第0列：a[0..i]与b[0..0]的maxlcs
+            if (a[i] == b[0]) maxlcs[i][0] = 1;
+            else if (i != 0) maxlcs[i][0] = maxlcs[i-1][0];
+            else maxlcs[i][0] = 0;
+        }
+        for (int i = 1; i < n; ++i) { // 填表
+            for (int j = 1; j < m; ++j) {
+                if (a[i] == b[j]) {
+                    maxlcs[i][j] = max(maxlcs[i-1][j], maxlcs[i][j-1], maxlcs[i-1][j-1]+1);
+                } else {
+                    maxlcs[i][j] = max(maxlcs[i-1][j], maxlcs[i][j-1], maxlcs[i-1][j-1]);
+                }
+            }
+        }
+        return maxlcs[n-1][m-1];
+    }
+
+    private static int max(int x, int y, int z) {
+        int maxv = Integer.MIN_VALUE;
+        if (x > maxv) maxv = x;
+        if (y > maxv) maxv = y;
+        if (z > maxv) maxv = z;
+        return maxv;
+    }
+
+
+    public static void main(String[] args) {
+        System.out.println(lcs(a, 6, b, 6));
+    }
+
 
 
 }
