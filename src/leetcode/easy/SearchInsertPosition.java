@@ -9,34 +9,26 @@ package leetcode.easy;
 public class SearchInsertPosition {
 
     public static void main(String[] args) {
-//        System.out.println(searchInsert(new int[]{1,3}, 0));
+        System.out.println(searchInsert(new int[]{1,3,5,6}, 0));
     }
-//
-//
-//    public static int searchInsert(int[] nums, int target) {
-//        return search(nums, 0, nums.length - 1, target);
-//    }
-//    public static int search(int[] nums, int start, int end, int target) {
-//        if (start == end) {
-//            if (nums[start] > target) {
-//                return start;
-//            } else if (nums[start] < target) {
-//                return start + 1;
-//            }
-//        } else if (start < end){
-//            int mid = (start + end) / 2;
-//            int result = 0;
-//            if (nums[mid] == target) {
-//                result = mid;
-//            } else if (nums[mid] > target) {
-//                result = search(nums, start, mid - 1, target);
-//            } else if (nums[mid] < target) {
-//                result = search(nums, mid + 1, end, target);
-//            }
-//        }
-//
-//        return result;
-//    }
+
+
+    public static int searchInsert(int[] nums, int target) {
+        for (int i = 0; i <= nums.length; i++) {
+            if (i == nums.length) {
+                return i;
+            }
+            if (nums[i] == target) {
+                return i;
+            } else if (nums[i] < target) {
+                continue;
+            } else {
+                return i;
+            }
+        }
+        return -1;
+    }
+
 
 
 }
