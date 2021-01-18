@@ -11,7 +11,7 @@ import java.util.Set;
  * 最长连续序列
  *
  */
-public class FindKthLargest {
+public class LongestConsecutive {
     public static void main(String[] args) {
 //        System.out.println(longestConsecutive(new int[]{0,3,7,2,5,8,4,6,0,1}));
         System.out.println(longestConsecutive(new int[]{9,1,4,7,3,-1,0,5,8,-1,6}));
