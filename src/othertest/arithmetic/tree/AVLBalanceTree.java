@@ -1,4 +1,4 @@
-package othertest.arithmetic.tree;
+package src.othertest.arithmetic.tree;
 
 import java.util.LinkedList;
 

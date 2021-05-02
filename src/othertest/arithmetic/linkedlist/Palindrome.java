@@ -1,4 +1,4 @@
-package othertest.arithmetic.linkedlist;
+package src.othertest.arithmetic.linkedlist;
 
 /**
  * 判断是否为回文

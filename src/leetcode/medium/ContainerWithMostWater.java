@@ -1,4 +1,4 @@
-package leetcode.medium;
+package src.leetcode.medium;
 
 /**
  * 盛最多水的容器

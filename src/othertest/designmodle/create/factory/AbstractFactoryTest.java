@@ -1,4 +1,4 @@
-package src.othertest.designmodle.factory;
+package src.othertest.designmodle.create.factory;
 
 //        抽象工厂模式的优点
 //          分离接口和实现

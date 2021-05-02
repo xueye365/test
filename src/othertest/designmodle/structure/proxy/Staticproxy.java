@@ -1,4 +1,4 @@
-package src.othertest.designmodle.proxy;
+package src.othertest.designmodle.structure.proxy;
 
 /**
  * 代理模式(静态代理模型)

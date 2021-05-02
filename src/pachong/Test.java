@@ -1,4 +1,4 @@
-package pachong;
+package src.pachong;
 
 import java.io.IOException;
 import java.util.ArrayList;

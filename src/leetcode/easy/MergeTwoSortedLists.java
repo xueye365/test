@@ -1,6 +1,6 @@
-package leetcode.easy;
+package src.leetcode.easy;
 
-import leetcode.other.ListNode;
+import src.leetcode.other.ListNode;
 
 /**
  * 合并两个有序链表

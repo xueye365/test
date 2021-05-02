@@ -1,4 +1,4 @@
-package othertest.arithmetic.hash;
+package src.othertest.arithmetic.hash;
 
 /**
  * 散列

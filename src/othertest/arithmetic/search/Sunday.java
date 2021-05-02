@@ -1,4 +1,4 @@
-package othertest.arithmetic.search;
+package src.othertest.arithmetic.search;
 
 /**
  * Sunday算法是从前往后匹配，在匹配失败时关注的是主串中参加匹配的最末位字符的下一位字符。

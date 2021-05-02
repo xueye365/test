@@ -1,4 +1,4 @@
-package leetcode.easy;
+package src.leetcode.easy;
 
 /**
  * 删除排序数组中的重复项

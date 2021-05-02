@@ -1,4 +1,4 @@
-package src.othertest.designmodle.proxy;
+package src.othertest.designmodle.structure.proxy;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -11,9 +11,13 @@ public class Dynamicproxy {
 
 
     public static void main(String[] args) {
+        // 保存生成的代理类class文件，默认false不保存
+        System.getProperties().setProperty("sun.misc.ProxyGenerator.saveGeneratedFiles", "true");
         UserService userService = new UserServiceImpl();
         UserService proxy = (UserService)new MyInvocationHandler(userService).getProxy();
         proxy.login("admin", "admin");
+        proxy.check();
+        proxy.toString();
     }
 }
 
@@ -21,6 +25,7 @@ public class Dynamicproxy {
 //接口
 interface UserService {
     void login(String username,String password);
+    void check();
 }
 
 
@@ -31,6 +36,11 @@ class UserServiceImpl implements UserService{
         if("admin".equals(username) && "admin".equals(password)) {
             System.out.println("登录成功");
         }
+    }
+
+    @Override
+    public void check() {
+        System.out.println("check");
     }
 }
 

@@ -1,4 +1,4 @@
-package src.othertest.designmodle.adapter;
+package src.othertest.designmodle.structure.adapter;
 
 /**
  * 缺省适配模式

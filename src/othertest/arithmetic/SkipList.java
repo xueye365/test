@@ -1,4 +1,4 @@
-package othertest.arithmetic;
+package src.othertest.arithmetic;
 
 
 import java.util.Random;

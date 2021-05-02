@@ -1,4 +1,4 @@
-package othertest.arithmetic.search;
+package src.othertest.arithmetic.search;
 
 import java.util.LinkedList;
 import java.util.Queue;

@@ -1,7 +1,7 @@
-package leetcode.medium;
+package src.leetcode.medium;
 
 
-import leetcode.other.ListNode;
+import src.leetcode.other.ListNode;
 
 /**
  * 链表两个数相加

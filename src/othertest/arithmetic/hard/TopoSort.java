@@ -1,4 +1,4 @@
-package othertest.arithmetic.hard;
+package src.othertest.arithmetic.hard;
 
 import java.util.LinkedList;
 

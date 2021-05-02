@@ -1,4 +1,4 @@
-package othertest.arithmetic.queue;
+package src.othertest.arithmetic.queue;
 
 /**
  * 循环队列

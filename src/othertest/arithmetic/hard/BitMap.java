@@ -1,4 +1,4 @@
-package othertest.arithmetic.hard;
+package src.othertest.arithmetic.hard;
 
 
 public class BitMap { // Java中char类型占16bit，也即是2个字节

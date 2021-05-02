@@ -1,4 +1,4 @@
-package othertest.arithmetic.search;
+package src.othertest.arithmetic.search;
 
 /**
  * KMP

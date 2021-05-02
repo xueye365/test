@@ -1,4 +1,4 @@
-package othertest.arithmetic;
+package src.othertest.arithmetic;
 
 /**
  * 二分查找

@@ -1,4 +1,4 @@
-package othertest.arithmetic.queue;
+package src.othertest.arithmetic.queue;
 
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;

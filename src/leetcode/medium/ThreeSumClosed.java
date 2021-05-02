@@ -1,4 +1,4 @@
-package leetcode.medium;
+package src.leetcode.medium;
 
 /**
  * 最接近的三数之和

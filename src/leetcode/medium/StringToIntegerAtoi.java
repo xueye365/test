@@ -1,4 +1,4 @@
-package leetcode.medium;
+package src.leetcode.medium;
 
 /**
  * 字符串转换整数

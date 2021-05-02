@@ -1,4 +1,4 @@
-package othertest.thread;
+package src.othertest.thread;
 
 public class SynchronizedTest {
     /**

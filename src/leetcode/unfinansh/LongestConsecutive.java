@@ -1,4 +1,4 @@
-package leetcode.unfinansh;
+package src.leetcode.unfinansh;
 
 import java.util.HashSet;
 import java.util.Set;

@@ -1,5 +1,8 @@
-package src.othertest.designmodle.decorator;
+package src.othertest.designmodle.structure.decorator;
 
+/**
+ * 装饰器模式
+ */
 public interface Decorator {
     void doSomething();
 }

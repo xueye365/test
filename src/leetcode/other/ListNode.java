@@ -1,4 +1,4 @@
-package leetcode.other;
+package src.leetcode.other;
 
 public class ListNode {
     public int val;

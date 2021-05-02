@@ -1,4 +1,4 @@
-package pachong;
+package src.pachong;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

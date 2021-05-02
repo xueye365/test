@@ -1,4 +1,4 @@
-package leetcode.medium;
+package src.leetcode.medium;
 
 /**
  * Z 字形变换

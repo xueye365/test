@@ -1,4 +1,4 @@
-package leetcode.medium;
+package src.leetcode.medium;
 
 /**
  * 最长回文字符串

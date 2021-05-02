@@ -1,4 +1,4 @@
-package othertest.other;
+package src.othertest.other;
 
 /**
  * 1，父类静态代码块>子类静态代码块>非静态代码块>构造方法>普通方法

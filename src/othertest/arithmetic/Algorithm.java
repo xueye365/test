@@ -1,4 +1,4 @@
-package othertest.arithmetic;
+package src.othertest.arithmetic;
 
 /**
  * 四种算法思想

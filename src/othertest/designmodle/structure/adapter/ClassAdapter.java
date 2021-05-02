@@ -1,4 +1,4 @@
-package src.othertest.designmodle.adapter;
+package src.othertest.designmodle.structure.adapter;
 
 /**
  * 类适配器(继承原，实现目标)

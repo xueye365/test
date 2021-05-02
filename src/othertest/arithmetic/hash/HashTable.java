@@ -1,4 +1,4 @@
-package othertest.arithmetic.hash;
+package src.othertest.arithmetic.hash;
 
 /**
  * @Description:散列表实现

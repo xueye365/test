@@ -1,4 +1,4 @@
-package leetcode.medium;
+package src.leetcode.medium;
 
 /**
  * https://leetcode-cn.com/problems/longest-increasing-subsequence/

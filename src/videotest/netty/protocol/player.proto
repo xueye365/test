@@ -1,4 +1,4 @@
-option java_package = "protoautogener";
+option java_package src.= "protoautogener";
 option java_outer_classname = "PlayerModule";
 message PBPlayer{
 	required int64 playerId = 1;

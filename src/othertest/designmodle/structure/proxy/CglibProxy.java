@@ -1,4 +1,4 @@
-package src.othertest.designmodle.proxy;
+package src.othertest.designmodle.structure.proxy;
 
 import org.springframework.cglib.proxy.Enhancer;
 import org.springframework.cglib.proxy.MethodInterceptor;

@@ -1,4 +1,4 @@
-package othertest.arithmetic.recursion;
+package src.othertest.arithmetic.recursion;
 
 /**
  * 递归

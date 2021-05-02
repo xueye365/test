@@ -1,4 +1,4 @@
-package othertest.arithmetic;
+package src.othertest.arithmetic;
 
 /**
  * 打印一组数据的所有排列

@@ -1,4 +1,4 @@
-package pachong;
+package src.pachong;
 
 public class HaozuXzlDetailVo {
 
