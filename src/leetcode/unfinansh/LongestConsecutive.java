@@ -4,9 +4,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * https://leetcode-cn.com/explore/interview/card/bytedance/243/array-and-sorting/1018/
+ * https://leetcode-cn.com/explore/interview/card/bytedance/243/array-and-sorting/1019/
  *
- * https://leetcode-cn.com/problems/longest-consecutive-sequence/solution/zui-chang-lian-xu-xu-lie-by-leetcode-solution/
+ * https://leetcode-cn.com/problems/longest-consecutive-sequence/
  *
  * 最长连续序列
  *
