@@ -3,8 +3,12 @@ package src.leetcode.easy;
 import src.leetcode.other.ListNode;
 
 /**
+ * 字节跳动
+ *
  * 合并两个有序链表
  * https://leetcode-cn.com/problems/merge-two-sorted-lists/
+ *
+ * https://leetcode-cn.com/explore/interview/card/bytedance/244/linked-list-and-tree/1048/
  */
 public class MergeTwoSortedLists {
 
