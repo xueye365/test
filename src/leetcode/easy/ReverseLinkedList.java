@@ -1,4 +1,4 @@
-package src.leetcode.bytesBeat;
+package src.leetcode.easy;
 
 
 /**
