@@ -1,4 +1,4 @@
-package src.leetcode.bytesBeat;
+package src.leetcode.hard;
 
 import java.util.ArrayList;
 import java.util.List;
