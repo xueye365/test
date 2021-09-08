@@ -6,8 +6,13 @@ package src.othertest.arithmetic.linkedlist;
  */
 public class LinkedListTest {
 
-
     public static void main(String[] args) {
+        Node node1 = new Node(1);
+        Node node2 = new Node(2, node1);
+        Node node3 = new Node(3, node2);
+        Node node4 = new Node(4, node3);
+        System.out.println(node4);
+        System.out.println(reverse(node4));
 
     }
 
