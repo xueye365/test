@@ -89,4 +89,22 @@ public class LongestSubstringWithoutRepeatingCharacters {
     }
 
 
+
+    public static int lengthOfLongestSubstring4(String s) {
+        Map<Character, Integer> map = new HashMap();
+        int minIndex = 0;
+        int maxIndex = 0;
+        int max = 0;
+        for(int i = 0; i < s.length(); i++){
+            if (map.get(s.charAt(i)) != null) {
+                minIndex = Math.max(map.get(s.charAt(i)) + 1, minIndex);
+            }
+            maxIndex = i;
+            map.put(s.charAt(i), i);
+            max = Math.max(max, maxIndex - minIndex + 1);
+        }
+        return max;
+    }
+
+
 }

@@ -63,5 +63,35 @@ public class MedianOfTwoSortedArrays {
         return mid;
     }
 
+
+
+    public static double findMedianSortedArrays2(int[] nums1, int[] nums2) {
+        int sum = nums1.length + nums2.length;
+        int[] nums = new int[sum];
+        int index = 0;
+
+        for(int i = 0, j = 0; i < nums1.length || j < nums2.length;){
+            if (i < nums1.length && j < nums2.length) {
+                if (nums1[i] < nums2[j]) {
+                    nums[index++] = nums1[i++];
+                } else {
+                    nums[index++] = nums2[j++];
+                }
+            } else if (i < nums1.length) {
+                nums[index++] = nums1[i++];
+            } else if (j < nums2.length) {
+                nums[index++] = nums2[j++];
+            }
+        }
+        if (sum % 2 == 1) {
+            return nums[sum / 2];
+        } else {
+            return (nums[sum / 2] + nums[sum / 2 - 1]) / 2.0;
+        }
+
+    }
+
+
+
 }
 
