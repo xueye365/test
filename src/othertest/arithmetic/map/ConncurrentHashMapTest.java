@@ -3,6 +3,7 @@ package src.othertest.arithmetic.map;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadLocalRandom;
 
 
@@ -18,6 +19,7 @@ public class ConncurrentHashMapTest<K,V> {
     static final int TREEIFY_THRESHOLD = 8;
     static final int UNTREEIFY_THRESHOLD = 6;
     static final int MIN_TREEIFY_CAPACITY = 64;
+    // 一个线程过来至少负责16个hash桶的迁移
     private static final int MIN_TRANSFER_STRIDE = 16;
     private static int RESIZE_STAMP_BITS = 16;
     private static final int MAX_RESIZERS = (1 << (32 - RESIZE_STAMP_BITS)) - 1;
@@ -32,6 +34,7 @@ public class ConncurrentHashMapTest<K,V> {
     // 计数，当没有线程竞争的时候使用，通过cas更新，volatile保证了内存可见行
     private transient volatile long baseCount;
     private transient volatile ConncurrentHashMapTest.Node<K,V>[] nextTable;
+    // 尚未执行迁移的hash桶索引最大值+1
     private transient volatile int transferIndex;
     static final int NCPU = Runtime.getRuntime().availableProcessors();
 
@@ -122,7 +125,7 @@ public class ConncurrentHashMapTest<K,V> {
                             ConncurrentHashMapTest.Node<K,V> p;
                             // 哈希桶中有多少健值对，永远等于2
                             binCount = 2;
-                            // 如果putTreeVal返回的不为空则说明有相同数据，替换，如果为空则是插入，病保持平衡
+                            // 如果putTreeVal返回的不为空则说明有相同数据，替换，如果为空则是插入，并保持平衡
                             if ((p = ((ConncurrentHashMapTest.TreeBin<K,V>)f).putTreeVal(hash, key, value)) != null) {
                                 oldVal = p.val;
                                 if (!onlyIfAbsent)
@@ -191,14 +194,20 @@ public class ConncurrentHashMapTest<K,V> {
      *
      * @param size number of elements (doesn't need to be perfectly accurate)
      */
+    // 左移一位，扩容两倍
     private final void tryPresize(int size) {
+        // 如果size的值等于或超过允许的哈希桶数组长度最大值，则直接设置为最大值，
+        // 否则将取大于等于要求长度的最小2的幂作为新长度
         int c = (size >= (MAXIMUM_CAPACITY >>> 1)) ? MAXIMUM_CAPACITY :
                 tableSizeFor(size + (size >>> 1) + 1);
         int sc;
+        // sizeCtl大于等于0表示没有在扩容
         while ((sc = sizeCtl) >= 0) {
             ConncurrentHashMapTest.Node<K,V>[] tab = table; int n;
+            // 查看table是否在初始化，将sizeCtl设置为下一次扩容时需要的元素个数
             if (tab == null || (n = tab.length) == 0) {
                 n = (sc > c) ? sc : c;
+                // 将sizeCtl设置为-1，正在扩容
                 if (U.compareAndSwapInt(this, SIZECTL, sc, -1)) {
                     try {
                         if (table == tab) {
@@ -212,19 +221,27 @@ public class ConncurrentHashMapTest<K,V> {
                     }
                 }
             }
+            // 如果要求的数组长度小于等于扩容需要的健值对个数（sc）,或者数组长度已经大于等于最大值
+            // 则直接返回，不做扩容，也就是说不能通过扩容解决哈希碰撞问题了，需要链表转红黑树
             else if (c <= sc || n >= MAXIMUM_CAPACITY)
                 break;
             else if (tab == table) {
                 int rs = resizeStamp(n);
                 if (sc < 0) {
                     ConncurrentHashMapTest.Node<K,V>[] nt;
-                    if ((sc >>> RESIZE_STAMP_SHIFT) != rs || sc == rs + 1 ||
-                            sc == rs + MAX_RESIZERS || (nt = nextTable) == null ||
-                            transferIndex <= 0)
+                    // 扩容判断
+                    if ((sc >>> RESIZE_STAMP_SHIFT) != rs
+                            || sc == rs + 1
+                            || sc == rs + MAX_RESIZERS
+                            || (nt = nextTable) == null
+                            || transferIndex <= 0)
                         break;
+                    // sc加一，表示有一个线程加入到正在扩容的工作中
                     if (U.compareAndSwapInt(this, SIZECTL, sc, sc + 1))
+                        // 带着下一个数组去
                         transfer(tab, nt);
                 }
+                // 如果不是第一个线程则加2
                 else if (U.compareAndSwapInt(this, SIZECTL, sc,
                         (rs << RESIZE_STAMP_SHIFT) + 2))
                     transfer(tab, null);
@@ -254,6 +271,7 @@ public class ConncurrentHashMapTest<K,V> {
         // hashMap是没有这个东西的，只有ConcurrentHashMap有这个值·
         return (h ^ (h >>> 16)) & HASH_BITS;
     }
+
 
 
     static final <K,V> ConncurrentHashMapTest.Node<K,V> tabAt(ConncurrentHashMapTest.Node<K,V>[] tab, int i) {
@@ -511,10 +529,17 @@ public class ConncurrentHashMapTest<K,V> {
      * Moves and/or copies the nodes in each bin to new table. See
      * above for explanation.
      */
+    /**
+     * 扩容健值对节点的迁移
+     * @param tab       现在的hash桶数组
+     * @param nextTab   新的hash桶数组
+     */
     private final void transfer(ConncurrentHashMapTest.Node<K,V>[] tab, ConncurrentHashMapTest.Node<K,V>[] nextTab) {
         int n = tab.length, stride;
+        // 一个线程过来至少负责16个hash桶的迁移
         if ((stride = (NCPU > 1) ? (n >>> 3) / NCPU : n) < MIN_TRANSFER_STRIDE)
-            stride = MIN_TRANSFER_STRIDE; // subdivide range
+            stride = MIN_TRANSFER_STRIDE; // subdiv ide range
+        // 如果nextTable是空，则创建新hash桶
         if (nextTab == null) {            // initiating
             try {
                 @SuppressWarnings("unchecked")
@@ -525,18 +550,27 @@ public class ConncurrentHashMapTest<K,V> {
                 return;
             }
             nextTable = nextTab;
+            // n是新数组中超过旧数组的第一个元素下标，是倒着迁移的
             transferIndex = n;
         }
         int nextn = nextTab.length;
         ConncurrentHashMapTest.ForwardingNode<K,V> fwd = new ConncurrentHashMapTest.ForwardingNode<K,V>(nextTab);
+        // 表示是否需要查找下一个hash桶，执行元素的迁移，如果是false则表示找到了，可以开始干活了
         boolean advance = true;
+        // true表示整个扩容过程结束，可以将tab设置为新的数组了，方法可以返回了
+        //
         boolean finishing = false; // to ensure sweep before committing nextTab
         for (int i = 0, bound = 0;;) {
+            // 用于记录需要进行元素迁移的hash桶数组元素，该元素要么是链表头节点，要么是红黑树的TreeBin对象
+            // fh表示hash值
             ConncurrentHashMapTest.Node<K,V> f; int fh;
+            // 表示是否需要查找下一个hash桶
             while (advance) {
                 int nextIndex, nextBound;
                 if (--i >= bound || finishing)
                     advance = false;
+                    // transferIndex表示尚未执行迁移的hash桶索引最大值+1
+                    // 如果transferIndex小于等于0，表示当前线程的迁移hash桶的使命已经完成
                 else if ((nextIndex = transferIndex) <= 0) {
                     i = -1;
                     advance = false;
@@ -555,9 +589,12 @@ public class ConncurrentHashMapTest<K,V> {
                 if (finishing) {
                     nextTable = null;
                     table = nextTab;
-                    sizeCtl = (n << 1) - (n >>> 1);
+                    sizeCtl = (n << 1) - (n >>> 1); // 左移一位=2n， n右移一位=1/2n，2n-1/2n=0.75n，下一次扩容的时候hash表里的数据个数必须是这么多才能开始扩容
                     return;
                 }
+                // 一个线程中途加入扩容，需要sizeCtrl+1，减去一个线程则需要sizeCtl-1
+                // 如果sc-2的值不是扩容戳resizeTemp(n) << RESIZE_STAMP_SHIFT，表示扩容还没有结束，当前线程直接返回
+                // 如果该关系式不成立表示其他参与扩容的线程还没有结束，仅仅是当前线程的扩容任务完成了
                 if (U.compareAndSwapInt(this, SIZECTL, sc = sizeCtl, sc - 1)) {
                     if ((sc - 2) != resizeStamp(n) << RESIZE_STAMP_SHIFT)
                         return;
@@ -566,21 +603,31 @@ public class ConncurrentHashMapTest<K,V> {
                 }
             }
             else if ((f = tabAt(tab, i)) == null)
+                // i处的hash桶没有元素需要迁移，只需要通过CAS将其标记为fwd，表示处理完成
+                // 该查找下一个执行元素迁移了
                 advance = casTabAt(tab, i, null, fwd);
             else if ((fh = f.hash) == MOVED)
+                // 已经被别的线程设置成fwd了
                 advance = true; // already processed
             else {
+                // 真正开始迁移了
                 synchronized (f) {
                     if (tabAt(tab, i) == f) {
                         ConncurrentHashMapTest.Node<K,V> ln, hn;
+                        // hash值大于0是一个链表
                         if (fh >= 0) {
+                            // 值为1，表示该节点应该挂高位hash桶链表
+                            // 值为0，表示应该在低位hash桶链表
                             int runBit = fh & n;
                             ConncurrentHashMapTest.Node<K,V> lastRun = f;
+                            // 从链表头节点开始，查找元素相同的为链表，如果元素都相同则在迁移的时候一起迁移过去，不用挨个执行元素的拼接操作了
+                            // 尾节点用lastRun节点表示
                             for (ConncurrentHashMapTest.Node<K,V> p = f.next; p != null; p = p.next) {
+
                                 int b = p.hash & n;
                                 if (b != runBit) {
-                                    runBit = b;
-                                    lastRun = p;
+                                    runBit = b;     // 记录应该放到高位还是放到低位
+                                    lastRun = p;    // 链表尾链的第一个节点，后面都一样，整体迁移即可
                                 }
                             }
                             if (runBit == 0) {
@@ -591,8 +638,10 @@ public class ConncurrentHashMapTest<K,V> {
                                 hn = lastRun;
                                 ln = null;
                             }
+
                             for (ConncurrentHashMapTest.Node<K,V> p = f; p != lastRun; p = p.next) {
                                 int ph = p.hash; K pk = p.key; V pv = p.val;
+                                // 倒着挂，如果hn或者ln是null，无所谓，因为链表的最后一个元素的next指针一定是null
                                 if ((ph & n) == 0)
                                     ln = new ConncurrentHashMapTest.Node<K,V>(ph, pk, pv, ln);
                                 else
@@ -603,9 +652,12 @@ public class ConncurrentHashMapTest<K,V> {
                             setTabAt(tab, i, fwd);
                             advance = true;
                         }
+                        // 是一个树
                         else if (f instanceof ConncurrentHashMapTest.TreeBin) {
                             ConncurrentHashMapTest.TreeBin<K,V> t = (ConncurrentHashMapTest.TreeBin<K,V>)f;
+                            // 低位hash桶标记
                             ConncurrentHashMapTest.TreeNode<K,V> lo = null, loTail = null;
+                            // 高位hash桶标记
                             ConncurrentHashMapTest.TreeNode<K,V> hi = null, hiTail = null;
                             int lc = 0, hc = 0;
                             for (ConncurrentHashMapTest.Node<K,V> e = t.first; e != null; e = e.next) {
@@ -613,6 +665,7 @@ public class ConncurrentHashMapTest<K,V> {
                                 ConncurrentHashMapTest.TreeNode<K,V> p = new ConncurrentHashMapTest.TreeNode<K,V>
                                         (h, e.key, e.val, null, null);
                                 if ((h & n) == 0) {
+                                    // 如果toTail是null，则赋值为p节点，此处处理的是第一个健值对
                                     if ((p.prev = loTail) == null)
                                         lo = p;
                                     else
@@ -629,10 +682,12 @@ public class ConncurrentHashMapTest<K,V> {
                                     ++hc;
                                 }
                             }
+                            // 如果小于等于6，则需要转换回链表，
                             ln = (lc <= UNTREEIFY_THRESHOLD) ? untreeify(lo) :
                                     (hc != 0) ? new ConncurrentHashMapTest.TreeBin<K,V>(lo) : t;
                             hn = (hc <= UNTREEIFY_THRESHOLD) ? untreeify(hi) :
                                     (lc != 0) ? new ConncurrentHashMapTest.TreeBin<K,V>(hi) : t;
+                            // 设置hash桶
                             setTabAt(nextTab, i, ln);
                             setTabAt(nextTab, i + n, hn);
                             setTabAt(tab, i, fwd);
@@ -664,7 +719,9 @@ public class ConncurrentHashMapTest<K,V> {
     static class Node<K,V> implements Map.Entry<K,V> {
         final int hash;
         final K key;
+        // 内存可见
         volatile V val;
+        // 内存可见
         volatile ConncurrentHashMapTest.Node<K,V> next;
 
         Node(int hash, K key, V val, ConncurrentHashMapTest.Node<K,V> next) {
@@ -1052,10 +1109,16 @@ public class ConncurrentHashMapTest<K,V> {
     }
 
     /**
+     *
+     * 大多数节点是基础node的实力，包括hash，key，value以及next四个字段
+     * 同时还有一些Node子类
      * treeNode用于平衡树，而不是链表
      * treeBin是TreeNode集合的跟节点
-     *
-     *
+     * ForwardingNode在哈希表扩容的时候作为哈希桶的头节点
+     * ReservationNode在调用computeIfAbsent和相关的方法的时候作为值的占位符使用
+     * treeBin、ForwardingNode、ReservationNode保存的数据不是典型的key，value
+     * 在搜索等操作的时候很容易识别，因为他们的hash字段是负值，key和value都是null
+     * 这些类型的节点要么不经常使用，要么是瞬时的，因此带着未使用的字段也无所谓了
      *
      *
      * @param <K>
@@ -1064,6 +1127,7 @@ public class ConncurrentHashMapTest<K,V> {
     static final class ForwardingNode<K,V> extends ConncurrentHashMapTest.Node<K,V> {
         final ConncurrentHashMapTest.Node<K,V>[] nextTable;
         ForwardingNode(ConncurrentHashMapTest.Node<K,V>[] tab) {
+            // MOVED是他的hash值，是-1，正在扩容中
             super(MOVED, null, null, null);
             this.nextTable = tab;
         }
@@ -1137,6 +1201,35 @@ public class ConncurrentHashMapTest<K,V> {
         volatile long value;
         CounterCell(long x) { value = x; }
     }
+
+
+
+    public V get(Object key) {
+        ConncurrentHashMapTest.Node<K,V>[] tab; ConncurrentHashMapTest.Node<K,V> e, p; int n, eh; K ek;
+        // 对key的哈希值进行优化，减少哈希碰撞
+        int h = spread(key.hashCode());
+        // 如果桶数组存在并且长度大于0，
+        if ((tab = table) != null && (n = tab.length) > 0 &&
+                // 同时分配的哈希桶不为空
+                (e = tabAt(tab, (n - 1) & h)) != null) {
+            // 如果哈希桶出的健值对的key的hash值与查询的key的hash值相同，则直接返回
+            if ((eh = e.hash) == h) {
+                if ((ek = e.key) == key || (ek != null && key.equals(ek)))
+                    return e.val;
+            }
+            //eh小于0，表示是一个红黑树，通过find来查找
+            else if (eh < 0)
+                return (p = e.find(h, key)) != null ? p.val : null;
+            // 链表情况
+            while ((e = e.next) != null) {
+                if (e.hash == h &&
+                        ((ek = e.key) == key || (ek != null && key.equals(ek))))
+                    return e.val;
+            }
+        }
+        return null;
+    }
+
 
 
 
