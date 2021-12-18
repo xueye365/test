@@ -472,7 +472,7 @@ public class Sort {
     }
 
     // 打印数据
-    private static void sout(int[] a){
+    public static void sout(int[] a){
         for (int i = 0; i < Arrays.asList(a).get(0).length; i++) {
             System.out.println(Arrays.asList(a).get(0)[i]);
         }
