@@ -9,7 +9,6 @@ import io.netty.handler.timeout.IdleStateEvent;
 
 public class ServerHandler extends SimpleChannelInboundHandler<String> {
 
-    @Override
     protected void messageReceived(ChannelHandlerContext channelHandlerContext, String s) throws Exception {
         System.out.println(s);
         // 俩是一样的
@@ -38,5 +37,10 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
 
 
         super.userEventTriggered(ctx, evt);
+    }
+
+    @Override
+    protected void channelRead0(ChannelHandlerContext channelHandlerContext, String s) throws Exception {
+
     }
 }

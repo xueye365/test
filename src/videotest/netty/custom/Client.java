@@ -44,7 +44,7 @@ public class Client {
 
         //连接服务端
         ChannelFuture connect = bootstrap.connect(new InetSocketAddress("127.0.0.1", 10101));
-        Channel channel = connect.sync().getChannel();
+//        Channel channel = connect.sync().getChannel();
 
         System.out.println("client start");
 
@@ -63,7 +63,7 @@ public class Client {
             request.setCmd((short) 1);
             request.setData(player.getBytes());
             //发送请求
-            channel.write(request);
+//            channel.write(request);
         }
     }
 
