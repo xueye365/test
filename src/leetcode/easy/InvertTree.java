@@ -27,19 +27,46 @@ public class InvertTree {
         System.out.println(invertTree(node7));
     }
 
+//    public static TreeNode invertTree(TreeNode root) {
+//        invertTreeReverse(root);
+//        return root;
+//    }
+//
+//    public static void invertTreeReverse(TreeNode root) {
+//        if (root != null && (root.left != null || root.right != null)) {
+//            invertTreeReverse(root.left);
+//            invertTreeReverse(root.right);
+//            TreeNode right = root.right;
+//            TreeNode left = root.left;
+//            root.left = right;
+//            root.right = left;
+//        }
+//    }
+
+
+
+
+
     public static TreeNode invertTree(TreeNode root) {
-        invertTreeReverse(root);
+        if (root != null) {
+            invertTreeReverse(root, root.left, root.right);
+        }
         return root;
     }
 
-    public static void invertTreeReverse(TreeNode root) {
-        if (root != null && (root.left != null || root.right != null)) {
-            invertTreeReverse(root.left);
-            invertTreeReverse(root.right);
-            TreeNode right = root.right;
-            TreeNode left = root.left;
-            root.left = right;
-            root.right = left;
+    public static void invertTreeReverse(TreeNode root, TreeNode left, TreeNode right){
+        if (root != null) {
+            if (left != null || right != null) {
+                root.left = right;
+                root.right = left;
+                if (left != null) {
+                    invertTreeReverse(left, left.left, left.right);
+                }
+                if (right != null) {
+                    invertTreeReverse(right, right.left, right.right);
+                }
+
+            }
         }
     }
 

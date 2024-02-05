@@ -58,7 +58,7 @@ public class LinkedListTest {
     public static boolean checkCircle(Node list) {
         if (list == null) {return false;}
 
-        Node fast = list.getNext();
+        Node fast = list;
         Node slow = list;
 
         while (fast != null && fast.getNext() != null) {
